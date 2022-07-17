@@ -30,14 +30,14 @@ utop # Printf.sprintf "You are on %s!" [%system { darwin = "Darwin"; unix = "UNI
 
 Three system are supported: **Darwin**, **UNIX** and **Win32**.
 
-```
+```ocaml
 utop # #require "ppx_system";;
 utop # [%system { darwin = "open"; unix = "xdg-open" }];;
 - : string = "xdg-open"
 ```
 
 Use the `default` field to set a default value if your system is not precised:
-```
+```ocaml
 utop # [%system { darwin = "foo"; default = "bar" }];;
 - : string = "bar"
 ```
