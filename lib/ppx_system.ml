@@ -9,15 +9,10 @@ let legal_options = "{ sys_name = string_litteral; ... }"
 let get_system () =
   if Sys.win32 then Ok Win32
   else
-    let inc = Unix.open_process_in "uname" in
-    let sys =
-      match input_line inc with
-      | "Darwin" -> Ok Darwin
-      | "Linux" -> Ok OtherUnix
-      | os_name -> Error os_name
-    in
-    let _ = Unix.close_process_in inc in
-    sys
+    match Uname.sysname () with
+    | "Darwin" -> Ok Darwin
+    | "Linux" -> Ok OtherUnix
+    | sys_name -> Error sys_name
 
 let find_field_value fields name ~default =
   let value = ref default in
@@ -62,9 +57,9 @@ let expand ~ctxt env_expr =
     | Ok Darwin -> system.darwin
     | Ok OtherUnix -> system.unix
     | Ok Win32 -> system.win32
-    | Error os_name ->
+    | Error sys_name ->
         Location.raise_errorf ~loc:env_expr.pexp_loc "Unsupported system : %S"
-          os_name
+          sys_name
   in
   let loc = Expansion_context.Extension.extension_point_loc ctxt in
   Ast_builder.Default.estring ~loc str
