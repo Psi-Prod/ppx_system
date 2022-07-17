@@ -1,6 +1,0 @@
-(executable
- (public_name ppx_system)
- (name main)
- (preprocess
-  (pps ppx_system))
- (libraries ppx_system))
