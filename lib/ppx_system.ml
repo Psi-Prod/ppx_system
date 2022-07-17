@@ -7,14 +7,14 @@ let deriver = "system"
 let legal_options = "{ os_name = field; ... }"
 
 let get_system () =
-  if Sys.win32 then Win32
+  if Sys.win32 then Ok Win32
   else
     let inc = Unix.open_process_in "uname" in
     let sys =
       match input_line inc with
-      | "Darwin" -> Darwin
-      | "Linux" -> OtherUnix
-      | _ -> failwith "TODO: unhandle system"
+      | "Darwin" -> Ok Darwin
+      | "Linux" -> Ok OtherUnix
+      | os_name -> Error os_name
     in
     let _ = Unix.close_process_in inc in
     sys
@@ -59,9 +59,12 @@ let expand ~ctxt env_expr =
   let system = parse_options env_expr in
   let str =
     match get_system () with
-    | Darwin -> system.darwin
-    | OtherUnix -> system.unix
-    | Win32 -> system.win32
+    | Ok Darwin -> system.darwin
+    | Ok OtherUnix -> system.unix
+    | Ok Win32 -> system.win32
+    | Error os_name ->
+        Location.raise_errorf ~loc:env_expr.pexp_loc "Unsupported system : %S"
+          os_name
   in
   let loc = Expansion_context.Extension.extension_point_loc ctxt in
   Ast_builder.Default.estring ~loc str
