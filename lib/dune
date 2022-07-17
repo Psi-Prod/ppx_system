@@ -1,4 +1,7 @@
 (library
  (public_name ppx_system)
  (kind ppx_rewriter)
- (libraries unix ppxlib))
+ (libraries unix ppxlib)
+ (foreign_stubs
+  (language c)
+  (names uname)))

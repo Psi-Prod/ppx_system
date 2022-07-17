@@ -9,15 +9,10 @@ let legal_options = "{ os_name = field; ... }"
 let get_system () =
   if Sys.win32 then Ok Win32
   else
-    let inc = Unix.open_process_in "uname" in
-    let sys =
-      match input_line inc with
-      | "Darwin" -> Ok Darwin
-      | "Linux" -> Ok OtherUnix
-      | os_name -> Error os_name
-    in
-    let _ = Unix.close_process_in inc in
-    sys
+    match Uname.sysname () with
+    | "Darwin" -> Ok Darwin
+    | "Linux" -> Ok OtherUnix
+    | os_name -> Error os_name
 
 let find_field_value fields name ~default =
   let value = ref default in
