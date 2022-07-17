@@ -1,18 +1,22 @@
 (lang dune 3.3)
 
+(version 1.0)
+
 (name ppx_system)
 
-(generate_opam_files true)
-
-(source
- (github Psi-Prod/ppx_system))
+(license "GPL-3.0")
 
 (authors "The ppx_system programmers")
 
 (maintainers "tim.arnouts@protonmail.com")
 
-(license "GPL-3.0")
+(source
+ (github Psi-Prod/ppx_system))
+
+(homepage "https://github.com/Psi-Prod/ppx-system")
+
+(generate_opam_files true)
 
 (package
  (name ppx_system)
- (depends ocaml dune))
+ (depends ocaml dune ppxlib))
