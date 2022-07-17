@@ -1,0 +1,4 @@
+(library
+ (public_name ppx_system)
+ (kind ppx_rewriter)
+ (libraries ppxlib))

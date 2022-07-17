@@ -1,0 +1,4 @@
+(executable
+ (public_name ppx_system)
+ (name main)
+ (libraries ppx_system))
