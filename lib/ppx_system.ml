@@ -4,7 +4,7 @@ type options = { darwin : string; unix : string; win32 : string }
 type system = Darwin | OtherUnix | Win32
 
 let deriver = "system"
-let legal_options = "{ os_name = field; ... }"
+let legal_options = "{ sys_name = string_litteral; ... }"
 
 let get_system () =
   if Sys.win32 then Ok Win32
