@@ -21,10 +21,12 @@ Add the following stanza to your dune file:
 
 ## Syntax
 
+Five system are supported: **Darwin**, **UNIX**, **Win32**, **FreeBSD**, **NetBSD**, **OpenBSD**.
+
 Assuming you are on **UNIX**:
 ```ocaml
-utop # #require "ppx_system";;
-utop #   Printf.sprintf "You are on %s!"
+# #require "ppx_system";;
+# Printf.sprintf "You are on %s!"
     [%system
       {
         darwin = "Darwin";
@@ -33,22 +35,21 @@ utop #   Printf.sprintf "You are on %s!"
         open_bsd = "OpenBSD";
         unix = "UNIX";
         win32 = "Win32";
+        default = "an unknown system"
       }]
 - : string = "You are on UNIX!"
 ```
 
-Five system are supported: **Darwin**, **UNIX**, **Win32**, **FreeBSD**, **NetBSD**, **OpenBSD**.
-
 ```ocaml
-utop # #require "ppx_system";;
-utop # [%system { darwin = "open"; unix = "xdg-open" }];;
+# #require "ppx_system";;
+# [%system { darwin = "open"; unix = "xdg-open" }];;
 - : string = "xdg-open"
 ```
 
 Use the `default` field to set a default value if your system is not precised:
 ```ocaml
-utop # [%system { free_bsd = "foo"; default = "bar" }];;
-- : string = "bar"
+# [%system { free_bsd = "On FreeBSD"; default = "Not on FreeBSD" }];;
+- : string = "Not on FreeBSD"
 ```
 
 ## Contributing

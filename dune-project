@@ -13,7 +13,7 @@
 (source
  (github Psi-Prod/ppx_system))
 
-(homepage "https://github.com/Psi-Prod/ppx-system")
+(homepage "https://github.com/Psi-Prod/ppx_system")
 
 (generate_opam_files true)
 
