@@ -34,8 +34,7 @@ Assuming you are on **UNIX**:
         net_bsd = "NetBSD";
         open_bsd = "OpenBSD";
         unix = "UNIX";
-        win32 = "Win32";
-        default = "an unknown system"
+        win32 = "Win32"
       }]
 - : string = "You are on UNIX!"
 ```
