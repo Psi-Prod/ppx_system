@@ -1,17 +1,31 @@
 open Ppxlib
 
-type options = { darwin : string; unix : string; win32 : string }
-type system = Darwin | OtherUnix | Win32
+type options = {
+  darwin : string;
+  free_bsd : string;
+  net_bsd : string;
+  open_bsd : string;
+  unix : string;
+  win32 : string;
+}
+
+type system = Darwin | FreeBSD | NetBSD | OpenBSD | Unix | Win32
 
 let deriver = "system"
 let legal_options = "{ sys_name = string_litteral; ... }"
+
+let supported_system =
+  [ "default"; "darwin"; "free_bsd"; "net_bsd"; "open_bsd"; "unix"; "win32" ]
 
 let get_system () =
   if Sys.win32 then Ok Win32
   else
     match Uname.sysname () with
     | "Darwin" -> Ok Darwin
-    | "Linux" -> Ok OtherUnix
+    | "FreeBSD" -> Ok FreeBSD
+    | "Linux" -> Ok Unix
+    | "NetBSD" -> Ok NetBSD
+    | "OpenBSD" -> Ok OpenBSD
     | sys_name -> Error sys_name
 
 let find_field_value fields name ~default =
@@ -33,8 +47,7 @@ let parse_options expr =
         (function
           | ( { txt = Lident field; loc },
               { pexp_desc = Pexp_constant (Pconst_string _); _ } ) ->
-              if not (List.mem field [ "default"; "darwin"; "unix"; "win32" ])
-              then
+              if not (List.mem field supported_system) then
                 Location.raise_errorf ~loc "%s does not support option %s"
                   deriver field
           | _ ->
@@ -43,9 +56,12 @@ let parse_options expr =
         fields;
       let default = find_field_value fields "default" ~default:"" in
       let darwin = find_field_value fields "darwin" ~default in
+      let free_bsd = find_field_value fields "free_bsd" ~default in
+      let net_bsd = find_field_value fields "net_bsd" ~default in
+      let open_bsd = find_field_value fields "open_bsd" ~default in
       let unix = find_field_value fields "unix" ~default in
       let win32 = find_field_value fields "win32" ~default in
-      { darwin; unix; win32 }
+      { darwin; free_bsd; net_bsd; open_bsd; unix; win32 }
   | _ ->
       Location.raise_errorf ~loc:expr.pexp_loc "A record of form %s is expected"
         legal_options
@@ -55,7 +71,10 @@ let expand ~ctxt env_expr =
   let str =
     match get_system () with
     | Ok Darwin -> system.darwin
-    | Ok OtherUnix -> system.unix
+    | Ok FreeBSD -> system.free_bsd
+    | Ok NetBSD -> system.net_bsd
+    | Ok OpenBSD -> system.open_bsd
+    | Ok Unix -> system.unix
     | Ok Win32 -> system.win32
     | Error sys_name ->
         Location.raise_errorf ~loc:env_expr.pexp_loc "Unsupported system : %S"

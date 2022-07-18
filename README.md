@@ -24,11 +24,20 @@ Add the following stanza to your dune file:
 Assuming you are on **UNIX**:
 ```ocaml
 utop # #require "ppx_system";;
-utop # Printf.sprintf "You are on %s!" [%system { darwin = "Darwin"; unix = "UNIX"; win32 = "Win32" }];;
+utop #   Printf.sprintf "You are on %s!"
+    [%system
+      {
+        darwin = "Darwin";
+        free_bsd = "FreeBSD";
+        net_bsd = "NetBSD";
+        open_bsd = "OpenBSD";
+        unix = "UNIX";
+        win32 = "Win32";
+      }]
 - : string = "You are on UNIX!"
 ```
 
-Three system are supported: **Darwin**, **UNIX** and **Win32**.
+Five system are supported: **Darwin**, **UNIX**, **Win32**, **FreeBSD**, **NetBSD**, **OpenBSD**.
 
 ```ocaml
 utop # #require "ppx_system";;
@@ -38,7 +47,7 @@ utop # [%system { darwin = "open"; unix = "xdg-open" }];;
 
 Use the `default` field to set a default value if your system is not precised:
 ```ocaml
-utop # [%system { darwin = "foo"; default = "bar" }];;
+utop # [%system { free_bsd = "foo"; default = "bar" }];;
 - : string = "bar"
 ```
 

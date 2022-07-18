@@ -1,3 +1,4 @@
 (test
-  (name test_ppx_system)
-  (preprocess (pps ppx_system)))
+ (name test_ppx_system)
+ (preprocess
+  (pps ppx_system)))
