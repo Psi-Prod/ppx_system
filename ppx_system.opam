@@ -29,3 +29,7 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/Psi-Prod/ppx_system.git"
+url {
+  src: "https://github.com/Psi-Prod/ppx_system/archive/refs/tags/1.0.1.tar.gz"
+  checksum: "md5=c8f01e3c825d43394e835b70e12efe45"
+}
