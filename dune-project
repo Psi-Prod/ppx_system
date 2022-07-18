@@ -1,6 +1,6 @@
 (lang dune 3.3)
 
-(version 1.0.1)
+(version 1.0)
 
 (name ppx_system)
 
