@@ -6,6 +6,12 @@
 #include <caml/fail.h>
 #include <caml/callback.h>
 
+#ifdef _WIN32
+
+CAMLprim value sysname(value unit) {};
+
+#else
+
 #include <sys/utsname.h>
 
 CAMLprim value sysname(value unit) {
@@ -19,3 +25,5 @@ CAMLprim value sysname(value unit) {
     caml_raise_constant(*caml_named_value("uname_exn_error"));
   }
 }
+
+#endif
