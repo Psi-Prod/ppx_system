@@ -6,7 +6,7 @@ synopsis:
 maintainer: ["tim.arnouts@protonmail.com"]
 authors: ["The ppx_system programmers"]
 license: "GPL-3.0"
-homepage: "https://github.com/Psi-Prod/ppx-system"
+homepage: "https://github.com/Psi-Prod/ppx_system"
 bug-reports: "https://github.com/Psi-Prod/ppx_system/issues"
 depends: [
   "ocaml"
