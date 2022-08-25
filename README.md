@@ -21,6 +21,24 @@ Add the following stanza to your dune file:
 
 ## Syntax
 
+### `[%get_system]`
+
+Use `[%get_system]` to get the host system as a constructor:
+```ocaml
+# #require "ppx_system";;
+# match [%get_system] with
+  | Darwin -> "Darwin"
+  | FreeBSD -> "FreeBSD"
+  | NetBSD -> "NetBSD"
+  | OpenBSD -> "OpenBSD"
+  | Unix -> "Unix"
+  | Win32 -> "Win32"
+  | Unknown sysname -> Printf.sprintf "Unknown system: %S" sysname
+- : string = "Unix"
+```
+
+### `[%system]`
+
 Five system are supported: **Darwin**, **UNIX**, **Win32**, **FreeBSD**, **NetBSD**, **OpenBSD**.
 
 Assuming you are on **UNIX**:
@@ -40,7 +58,6 @@ Assuming you are on **UNIX**:
 ```
 
 ```ocaml
-# #require "ppx_system";;
 # [%system { darwin = "open"; unix = "xdg-open" }];;
 - : string = "xdg-open"
 ```
@@ -49,6 +66,12 @@ Use the `default` field to set a default value if your system is not precised:
 ```ocaml
 # [%system { free_bsd = "On FreeBSD"; default = "Not on FreeBSD" }];;
 - : string = "Not on FreeBSD"
+```
+
+An empty string is generated in case none of the provided field match the host system:
+```ocaml
+# [%system { darwin = "Darwin" }];;
+- : string = ""
 ```
 
 ## Contributing
