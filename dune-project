@@ -19,5 +19,5 @@
 
 (package
  (name ppx_system)
- (synopsis "A ppx to known host operating system at compile time.")
+ (synopsis "A ppx to know host operating system at compile time")
  (depends ocaml dune ppxlib))
