@@ -1,5 +1,7 @@
 (* Written to work on Linux. *)
 
+assert (match [%get_system] with Unix -> true | _ -> false);
+
 assert (String.equal "xdg-open" [%system { unix = "xdg-open" }]);
 
 assert (

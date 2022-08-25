@@ -75,7 +75,7 @@ end
 
 module GetSystemExp = struct
   let expand ~loc ~path:_ =
-    (* let loc = { loc with loc_ghost = true } in *)
+    let loc = { loc with loc_ghost = true } in
     let (module Builder) = Ast_builder.make loc in
     match System.get () with
     | Ok system ->
