@@ -19,6 +19,5 @@
 
 (package
  (name ppx_system)
- (synopsis
-  "A ppx that allows to generate a different string depending on the operating system used")
+ (synopsis "A ppx to known host operating system at compile time.")
  (depends ocaml dune ppxlib))

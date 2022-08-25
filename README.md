@@ -1,6 +1,6 @@
 # ppx_system
 
-`ppx_system` is a syntax extension that allows to generate a different string depending on the operating system used.
+`ppx_system` is a syntax extension to known host operating system at compile time.
 
 ## Installation
 
