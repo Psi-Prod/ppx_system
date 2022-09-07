@@ -1,26 +1,10 @@
-(* Written to work on Linux. *)
-
-assert (match [%get_system] with Unix -> true | _ -> false);
-
-assert (String.equal "xdg-open" [%system { unix = "xdg-open" }]);
-
 assert (
-  String.equal "UNIX"
-    [%system
-      {
-        darwin = "Darwin";
-        free_bsd = "FreeBSD";
-        net_bsd = "NetBSD";
-        open_bsd = "OpenBSD";
-        unix = "UNIX";
-        win32 = "Win32";
-      }]);
-
-assert (String.equal "open" [%system { default = "open" }]);
-
-assert (
-  String.equal "xdg-open" [%system { darwin = "open"; default = "xdg-open" }]);
-
-assert (
-  String.equal "xdg-open"
-    [%system { darwin = "open"; unix = "xdg-open"; win32 = "open" }])
+  match [%get_system] with
+  | Darwin when [%system { darwin = "darwin" }] = "darwin" -> true
+  | FreeBSD when [%system { free_bsd = "free_bsd" }] = "free_bsd" -> true
+  | NetBSD when [%system { net_bsd = "net_bsd" }] = "net_bsd" -> true
+  | OpenBSD when [%system { open_bsd = "open_bsd" }] = "open_bsd" -> true
+  | Unix when [%system { unix = "unix" }] = "unix" -> true
+  | Win32 when [%system { win32 = "win32" }] = "win32" -> true
+  | Unknown _ when [%system { darwin = "darwin" }] = "" -> true
+  | _ -> false)
