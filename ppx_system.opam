@@ -10,7 +10,7 @@ bug-reports: "https://github.com/Psi-Prod/ppx_system/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.3"}
-  "ppxlib"
+  "ppxlib" {>= "0.18.0"}
   "odoc" {with-doc}
 ]
 build: [

@@ -20,4 +20,4 @@
 (package
  (name ppx_system)
  (synopsis "A ppx to know host operating system at compile time")
- (depends ocaml dune ppxlib))
+ (depends ocaml dune (ppxlib (>= "0.18.0"))))
